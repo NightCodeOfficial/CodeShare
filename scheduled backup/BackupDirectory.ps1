@@ -38,7 +38,7 @@ try {
         $currentTime = Get-Date -Format "yyyyMMdd_HHmmss"
         $lowLevelSourceDirectory = Split-Path -Path $SourceDirectory -Leaf
         # The backup file will have the lowest level directory from the source and the current time
-        $backupFileName = "Backup_$lowLevelSourceDirectory_$currentTime.zip"
+        $backupFileName = "Backup_{0}_{1}.zip" -f $lowLevelSourceDirectory, $currentTime
 
         # Create the destination directory if it doesn't exist
         if (-not (Test-Path -Path $DestinationDirectory -PathType Container)) {
@@ -47,7 +47,7 @@ try {
 
         # Create the zip file
         $zipFilePath = Join-Path -Path $DestinationDirectory -ChildPath $backupFileName
-        Compress-Archive -Path $SourceDirectory -DestinationPath $zipFilePath | Out-Null
+        Compress-Archive -Path $SourceDirectory -DestinationPath $zipFilePath
 
         # Success message
         Write-Output "Backup completed successfully."
